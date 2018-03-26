@@ -4,6 +4,11 @@ abstract public class BMI {
 
 	protected double mass = 0;
 	protected double height = 0;
+	final static double GOOD_LOW = 18.5;
+	final static double GOOD_HI = 25;
+	final static double MED_LOW = 16;
+	final static double MED_HI = 30;
+
 
 	public BMI(double mass, double height){
 		this.mass = mass;
@@ -13,14 +18,3 @@ abstract public class BMI {
 	abstract public double calculateBmi() throws IllegalArgumentException;
 
 }
-
-/*
-1. Testy mają być
-2. Ma się poprawnie obracać i dobrze po tym wyglądać
-
-
-5. Wynik ma być zapisywany sharedPrefs, ikonka obok "3 kropki"
-
-
-
- */

@@ -25,15 +25,20 @@ public class BMIActivity extends AppCompatActivity {
         //Pasek menu
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 	    setSupportActionBar(toolbar);
+	    //Ustaw Listenery dla przycisków
+	    setButtonsListeners();
+    }
+
+    void setButtonsListeners(){
 	    //Przycisk count
-        OnClickListener countButtonListener = new OnClickListener(){
-            public void onClick(View view){
-	            moveToResultActivity();
-            }
-        };
-        Button button_count = findViewById(R.id.button_compute);
-        button_count.setOnClickListener(countButtonListener);
-        //Zmiana jednostek
+	    OnClickListener countButtonListener = new OnClickListener(){
+		    public void onClick(View view){
+			    moveToResultActivity();
+		    }
+	    };
+	    Button buttonCount = findViewById(R.id.button_compute);
+	    buttonCount.setOnClickListener(countButtonListener);
+	    //Zmiana jednostek
 	    final Switch switchUnits = (Switch) findViewById(R.id.switch_units);
 	    switchUnits.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 		    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -70,6 +75,20 @@ public class BMIActivity extends AppCompatActivity {
 		BMIActivity.this.startActivity(moveToAboutActivity);
 	}
 
+	private void moveToResultActivity(){
+		Switch switchUnits = (Switch) findViewById(R.id.switch_units);
+		try{
+			double bmi = parseInputAndCompute(switchUnits.isChecked());
+			BMI = bmi;
+			Intent moveToResultActivity = new Intent(BMIActivity.this, BMIResult.class);
+			moveToResultActivity.putExtra("Result", bmi);
+			BMIActivity.this.startActivity(moveToResultActivity);
+		}
+		catch(IllegalArgumentException e){
+			Toast.makeText(getApplicationContext(), R.string.error_message, Toast.LENGTH_SHORT).show();
+		}
+	}
+
 	private void sharedPrefs(){
 		SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = sharedPref.edit();
@@ -95,20 +114,6 @@ public class BMIActivity extends AppCompatActivity {
 		return bmi.calculateBmi();
 	}
 
-    private void moveToResultActivity(){
-	    Switch switchUnits = (Switch) findViewById(R.id.switch_units);
-	    try{
-	    	double bmi = parseInputAndCompute(switchUnits.isChecked());
-	    	BMI = bmi;
-		    Intent moveToResultActivity = new Intent(BMIActivity.this, BMIResult.class);
-		    moveToResultActivity.putExtra("Result", bmi);
-		    BMIActivity.this.startActivity(moveToResultActivity);
-	    }
-	    catch(IllegalArgumentException e){
-		    Toast.makeText(getApplicationContext(), R.string.error_message, Toast.LENGTH_SHORT).show();
-	    }
-    }
-
 	@Override
 	protected void onStop(){
     	super.onStop();
@@ -133,6 +138,7 @@ public class BMIActivity extends AppCompatActivity {
 		SharedPreferences.Editor editor = sharedPref.edit();
 		String mass = sharedPref.getString(getResources().getString(R.string.shared_pref_mass), null);
 		String height = sharedPref.getString(getResources().getString(R.string.shared_pref_height), null);
+		editor.apply();
 		// Pobierz ID pól tekstowych
 		EditText weightText = (EditText) findViewById(R.id.editText_weight);
 		EditText heightText = (EditText) findViewById(R.id.editText_height);
