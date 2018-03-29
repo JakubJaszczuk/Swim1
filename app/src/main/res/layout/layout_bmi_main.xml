@@ -9,7 +9,7 @@
 		android:layout_height="wrap_content"
 		android:gravity="end"
 		android:orientation="vertical"
-		tools:context="com.example.riper.swim1.BMIActivity">
+		tools:context="com.example.riper.swim1.BmiActivity">
 
 		<android.support.v7.widget.Toolbar
 			android:id="@+id/toolbar"

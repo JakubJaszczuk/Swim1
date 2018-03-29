@@ -10,7 +10,7 @@
 		android:supportsRtl="true"
 		android:theme="@style/AppTheme">
 		<activity
-			android:name=".BMIActivity"
+			android:name=".BmiActivity"
 			android:theme="@style/AppTheme.NoActionBar">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
@@ -20,24 +20,24 @@
 		</activity>
 
 		<activity
-			android:name=".BMIResult"
+			android:name=".BmiResult"
 			android:label="@string/title_layout_bmi_result"
-			android:parentActivityName=".BMIActivity"
+			android:parentActivityName=".BmiActivity"
 			android:theme="@style/AppTheme">
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
-				android:value="com.example.riper.swim1.BMIActivity" />
+				android:value="com.example.riper.swim1.BmiActivity" />
 		</activity>
 
 		<activity
 			android:name=".AboutActivity"
 			android:configChanges="orientation|keyboardHidden|screenSize"
 			android:label="@string/title_activity_about"
-			android:parentActivityName=".BMIActivity"
+			android:parentActivityName=".BmiActivity"
 			android:theme="@style/FullscreenTheme">
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
-				android:value="com.example.riper.swim1.BMIActivity" />
+				android:value="com.example.riper.swim1.BmiActivity" />
 		</activity>
 	</application>
 

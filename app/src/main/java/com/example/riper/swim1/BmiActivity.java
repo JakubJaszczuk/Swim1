@@ -13,7 +13,7 @@ import android.view.*;
 import android.view.View.*;
 import android.widget.Toast;
 
-public class BMIActivity extends AppCompatActivity {
+public class BmiActivity extends AppCompatActivity {
 
 	double BMI = 0;
 
@@ -77,7 +77,7 @@ public class BMIActivity extends AppCompatActivity {
 		try{
 			double bmi = parseInputAndCompute();
 			BMI = bmi;
-			BMIResult.start(this, bmi);
+			BmiResult.start(this, bmi);
 		}
 		catch(IllegalArgumentException e){
 			Toast.makeText(getApplicationContext(), R.string.error_message, Toast.LENGTH_SHORT).show();

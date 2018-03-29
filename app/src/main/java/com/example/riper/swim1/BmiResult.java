@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class BMIResult extends AppCompatActivity {
+public class BmiResult extends AppCompatActivity {
 
 	private static final String key = "bmiValue";
 
@@ -22,9 +22,12 @@ public class BMIResult extends AppCompatActivity {
 		double bmi = this.getIntent().getExtras().getDouble(key, 0.0);
 		TextView bmiTextView = (TextView) findViewById(R.id.textView_bmi_result);
 		bmiTextView.setText(String.format("%.2f", bmi));
-		changeBackgroundColour(bmi);
+		//changeBackgroundColour(bmi);
+		// Wykonaj odpowiednią akcję
+		BmiAction action = new BmiActionChangeBackgroundColor(new BmiInterpreter(bmi).interpret(), this);
+		action.action();
 	}
-
+	/*
 	void changeBackgroundColour(double bmi){
 		RelativeLayout layout = findViewById(R.id.layout_result);
 		if(bmi > BMI.GOOD_LOW && bmi < BMI.GOOD_HI){
@@ -37,9 +40,10 @@ public class BMIResult extends AppCompatActivity {
 			layout.setBackgroundResource(R.color.bmi_result_bad);
 		}
 	}
+	*/
 
 	public static void start(Context context, double value) {
-	    Intent starter = new Intent(context, BMIResult.class);
+	    Intent starter = new Intent(context, BmiResult.class);
 	    starter.putExtra(key, value);
 	    context.startActivity(starter);
 	}
