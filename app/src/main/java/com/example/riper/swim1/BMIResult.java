@@ -7,9 +7,9 @@ import android.os.Bundle;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.text.DecimalFormat;
-
 public class BMIResult extends AppCompatActivity {
+
+	private static final String key = "bmiValue";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -19,11 +19,9 @@ public class BMIResult extends AppCompatActivity {
 	}
 
 	void displayBmi(){
-		Intent getBmiIntent = getIntent();
-		double bmi = getBmiIntent.getDoubleExtra("Result", -1);
+		double bmi = this.getIntent().getExtras().getDouble(key, 0.0);
 		TextView bmiTextView = (TextView) findViewById(R.id.textView_bmi_result);
-		DecimalFormat format = new DecimalFormat("#.00");
-		bmiTextView.setText(format.format(bmi));
+		bmiTextView.setText(String.format("%.2f", bmi));
 		changeBackgroundColour(bmi);
 	}
 
@@ -40,11 +38,9 @@ public class BMIResult extends AppCompatActivity {
 		}
 	}
 
-	/*
-	public static void start(Context context) {
+	public static void start(Context context, double value) {
 	    Intent starter = new Intent(context, BMIResult.class);
-	    starter.putExtra();
+	    starter.putExtra(key, value);
 	    context.startActivity(starter);
 	}
-	*/
 }

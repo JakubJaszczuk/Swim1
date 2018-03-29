@@ -1,7 +1,6 @@
 package com.example.riper.swim1;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.widget.Toolbar;
 import android.widget.Button;
@@ -71,22 +70,36 @@ public class BMIActivity extends AppCompatActivity {
 	}
 
 	private void moveToAboutActivity(){
-		Intent moveToAboutActivity = new Intent(BMIActivity.this, AboutActivity.class);
-		BMIActivity.this.startActivity(moveToAboutActivity);
+    	AboutActivity.start(this);
 	}
 
 	private void moveToResultActivity(){
-		Switch switchUnits = (Switch) findViewById(R.id.switch_units);
 		try{
-			double bmi = parseInputAndCompute(switchUnits.isChecked());
+			double bmi = parseInputAndCompute();
 			BMI = bmi;
-			Intent moveToResultActivity = new Intent(BMIActivity.this, BMIResult.class);
-			moveToResultActivity.putExtra("Result", bmi);
-			BMIActivity.this.startActivity(moveToResultActivity);
+			BMIResult.start(this, bmi);
 		}
 		catch(IllegalArgumentException e){
 			Toast.makeText(getApplicationContext(), R.string.error_message, Toast.LENGTH_SHORT).show();
 		}
+	}
+
+	private double parseInputAndCompute() throws IllegalArgumentException{
+		EditText weightText = (EditText) findViewById(R.id.editText_weight);
+		EditText heightText = (EditText) findViewById(R.id.editText_height);
+		double mass = 0, height = 0;
+		BMI bmi;
+		mass = Double.parseDouble(weightText.getText().toString());
+		height = Double.parseDouble(heightText.getText().toString());
+		// Rzuć wyjątek dalej jeżeli jest
+		Switch switchUnits = (Switch) findViewById(R.id.switch_units);
+		if(switchUnits.isChecked()){
+			bmi = new BmiForLbIn(mass, height);
+		}
+		else{
+			bmi = new BmiForKgM(mass, height);
+		}
+		return bmi.calculateBmi();
 	}
 
 	private void sharedPrefs(){
@@ -95,23 +108,6 @@ public class BMIActivity extends AppCompatActivity {
 		editor.putFloat(getResources().getString(R.string.shared_pref_key), (float)BMI);
 		editor.apply();
 		Toast.makeText(getApplicationContext(), R.string.shared_pref_saved, Toast.LENGTH_SHORT).show();
-	}
-
-	private double parseInputAndCompute(boolean imperial) throws IllegalArgumentException{
-		EditText weightText = (EditText) findViewById(R.id.editText_weight);
-		EditText heightText = (EditText) findViewById(R.id.editText_height);
-		double mass = 0, height = 0;
-		BMI bmi;
-		mass = Double.parseDouble(weightText.getText().toString());
-		height = Double.parseDouble(heightText.getText().toString());
-		// Rzuć wyjątek dalej jeżeli jest
-		if(imperial){
-			bmi = new BmiForLbIn(mass, height);
-		}
-		else{
-			bmi = new BmiForKgM(mass, height);
-		}
-		return bmi.calculateBmi();
 	}
 
 	@Override
@@ -139,7 +135,7 @@ public class BMIActivity extends AppCompatActivity {
 		String mass = sharedPref.getString(getResources().getString(R.string.shared_pref_mass), null);
 		String height = sharedPref.getString(getResources().getString(R.string.shared_pref_height), null);
 		editor.apply();
-		// Pobierz ID pól tekstowych
+		// Pobierz ID pól tekstowych by ustawić teksty na nich
 		EditText weightText = (EditText) findViewById(R.id.editText_weight);
 		EditText heightText = (EditText) findViewById(R.id.editText_height);
 		weightText.setText(mass);

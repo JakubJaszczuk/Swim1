@@ -1,6 +1,8 @@
 package com.example.riper.swim1;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -176,5 +178,10 @@ public class AboutActivity extends AppCompatActivity {
 	private void delayedHide(int delayMillis) {
 		mHideHandler.removeCallbacks(mHideRunnable);
 		mHideHandler.postDelayed(mHideRunnable, delayMillis);
+	}
+
+	public static void start(Context context) {
+		Intent starter = new Intent(context, BMIResult.class);
+		context.startActivity(starter);
 	}
 }
