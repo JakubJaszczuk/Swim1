@@ -181,7 +181,7 @@ public class AboutActivity extends AppCompatActivity {
 	}
 
 	public static void start(Context context) {
-		Intent starter = new Intent(context, BmiResult.class);
+		Intent starter = new Intent(context, AboutActivity.class);
 		context.startActivity(starter);
 	}
 }
