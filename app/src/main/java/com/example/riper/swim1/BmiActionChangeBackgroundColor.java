@@ -5,7 +5,7 @@ import android.widget.RelativeLayout;
 
 public class BmiActionChangeBackgroundColor extends BmiAction {
 
-	Activity activity;
+	private Activity activity;
 
 	BmiActionChangeBackgroundColor(BmiStatus status, Activity activity){
 		super(status);

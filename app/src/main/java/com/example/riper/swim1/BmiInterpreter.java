@@ -2,7 +2,7 @@ package com.example.riper.swim1;
 
 public class BmiInterpreter {
 
-	double bmi;
+	private double bmi;
 
 	protected double mass = 0;
 	protected double height = 0;
